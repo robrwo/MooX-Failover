@@ -6,7 +6,10 @@ use Carp;
 use Class::Load qw/ try_load_class /;
 use PerlX::Maybe;
 
-use version 0.77; our $VERSION = version->declare('v0.1.0');
+{
+  use version 0.77;
+  $MooX::Failover::VERSION = version->declare('v0.1.0');
+}
 
 # RECOMMEND PREREQ: Class::Load::XS
 # RECOMMEND PREREQ: PerlX::Maybe::XS
