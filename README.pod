@@ -4,7 +4,7 @@ MooX::Failover - Instantiate Moo classes with failover
 
 =head1 VERSION
 
-v0.1.0_01
+v0.1.0_02
 
 =head1 SYNOPSIS
 
@@ -60,7 +60,7 @@ This distribution recommends the following modules:
 
 =item * 
 
-An initial port of MooseX-Failover to Moo.
+Minor optimizations.
 
 =back
 

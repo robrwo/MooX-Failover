@@ -156,12 +156,12 @@ rough benchmarks suggest several times slower.
 around new => sub {
     my ( $orig, $class, %args ) = @_;
 
-    my $failover = $args{failover_to};
-    my $next = ( ref $failover ) ? $failover : { class => $failover };
-
-    $next->{err_arg} = 'error' unless exists $next->{err_arg};
-
     eval { $class->$orig(%args) } // do {
+
+        my $failover = $args{failover_to};
+        my $next = ( ref $failover ) ? $failover : { class => $failover };
+
+        $next->{err_arg} = 'error' unless exists $next->{err_arg};
 
         my $error = $@;
         my $next_next;
