@@ -139,6 +139,16 @@ declared.
 A default C<failover_to> attribute cannot be declared in the
 class. You must specify it in an argument.
 
+=item
+
+This is signficantly slower than using an
+
+  my $obj = eval { MyClass->new(%args) //
+     OtherClass->new( %args, error => $@ );
+
+for the L<Moo> version than the L<Moose> version of this module.  Some
+rough benchmarks suggest several times slower.
+
 =back
 
 =cut
@@ -178,6 +188,12 @@ around new => sub {
 };
 
 =for readme continue
+
+=head1 CAVEATS
+
+This module is experimental. It works, but the current version is
+significantly slower than using a simple eval or try block.  So it's
+not recommended for production code.
 
 =head1 SEE ALSO
 
