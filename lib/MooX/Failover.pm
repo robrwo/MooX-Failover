@@ -138,9 +138,9 @@ failover as part of the class definition by defining an attribute:
 Failover attributes from parent classes are not used. (This
 restriction is to improve the performance.)
 
-This is basically a L<Moo> port of L<MooseX::Failover>. The only
-difference in the interface is that you need to consume the role
-I<after> the attributes have been declared.
+This is a L<Moo> port of L<MooseX::Failover>. The only difference in
+the interface is that you need to consume the role I<after> the
+attributes have been declared.
 
 =cut
 
