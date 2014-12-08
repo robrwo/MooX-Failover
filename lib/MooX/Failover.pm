@@ -7,7 +7,7 @@ use Class::Load qw/ try_load_class /;
 
 {
     use version 0.77;
-    $MooX::Failover::VERSION = version->declare('v0.1.0_01');
+    $MooX::Failover::VERSION = version->declare('v0.1.0_02');
 }
 
 # RECOMMEND PREREQ: Class::Load::XS
