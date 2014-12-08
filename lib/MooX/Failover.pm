@@ -120,27 +120,25 @@ is equivalent to
 
   failover_to => { class => 'OtherClass' }
 
-Note that this is not an attribute.  You can specify a default
-failover as part of the class definition by defining an attribute:
-
-  has failover_to => (
-      is       => 'ro',
-      isa      => 'HashRef',
-      init_arg => undef,
-      default  => sub {
-          {
-              class   => 'Failover',
-              err_arg => 'error',
-          };
-      },
-  );
-
-Failover attributes from parent classes are not used. (This
+Note that this is not an attribute.Failover attributes from parent classes are not used. (This
 restriction is to improve the performance.)
 
-This is a L<Moo> port of L<MooseX::Failover>. The only difference in
-the interface is that you need to consume the role I<after> the
-attributes have been declared.
+This is a L<Moo> port of L<MooseX::Failover>. The only differences are
+that:
+
+=over
+
+item 1.
+
+You need to consume the role I<after> the attributes have been
+declared.
+
+=item 2.
+
+A default C<failover_to> attribute cannot be declared in the
+class. You must specify it in an argument.
+
+=back
 
 =cut
 
