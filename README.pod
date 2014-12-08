@@ -4,7 +4,7 @@ MooX::Failover - Instantiate Moo classes with failover
 
 =head1 VERSION
 
-v0.1.0
+v0.1.0_01
 
 =head1 SYNOPSIS
 
@@ -94,6 +94,12 @@ Principle, so that (roughly) all provable properties of the original
 class are also provable of the failover class.  In practice, we only
 care about the properties (methods and attributes) that are actually
 used in our programs.
+
+=head1 CAVEATS
+
+This module is experimental. It works, but the current version is
+significantly slower than using a simple eval or try block.  So it's
+not recommended for production code.
 
 =head1 SEE ALSO
 
