@@ -1,0 +1,5 @@
+Revision history for MooX-Failover
+
+{{$NEXT}}
+  - An initial port of MooseX-Failover to Moo.
+
