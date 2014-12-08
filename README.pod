@@ -54,8 +54,6 @@ This distribution recommends the following modules:
 
 =item * L<Class::Load::XS>
 
-=item * L<PerlX::Maybe::XS>
-
 =back
 
 =head1 RECENT CHANGES
