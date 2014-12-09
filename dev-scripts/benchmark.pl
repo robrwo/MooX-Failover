@@ -66,7 +66,7 @@ cmpthese(
 );
 
 cmpthese(
-    20_000,
+    100_000,
     {
         failover   => 'failover_ok',
         try_catch  => 'try_catch_ok',
