@@ -56,11 +56,23 @@ This distribution recommends the following modules:
 
 =head1 RECENT CHANGES
 
+=head2 Enhancements
+
 =over 4
 
 =item * 
 
 Minor optimizations.
+
+=back
+
+=head2 Other Changes
+
+=over 4
+
+=item * 
+
+Added missing MANIFEST.SKIP and removed dist.ini from distribution.
 
 =back
 

@@ -1,7 +1,12 @@
 Revision history for MooX-Failover
 
 {{$NEXT}}
+  [Enhancements]
   - Minor optimizations.
+
+  [Other Changes]
+  - Added missing MANIFEST.SKIP and removed dist.ini from
+    distribution.
 
 v0.1.0_01 2014-12-08 17:51:22+00:00 Europe/London
   - An initial port of MooseX-Failover to Moo.
