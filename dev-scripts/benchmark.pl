@@ -3,7 +3,7 @@
 
     package A;
     use Moo;
-    use MooX::Types::MooseLike::Base 'Int';
+    use MooX::Types::MooseLike::Base qw/ Int /;
 
     has i => ( is => 'ro', isa => Int );
 }
@@ -12,7 +12,7 @@
 
     package C;
     use Moo;
-    use MooX::Types::MooseLike::Base 'Int';
+    use MooX::Types::MooseLike::Base qw/ Int /;
 
     has i => ( is => 'ro', isa => Int );
 
@@ -23,9 +23,8 @@
 
     package D;
     use Moo;
-
-    # use MooX::Types::MooseLike::Base 'Str';
-    # has i => ( is => 'ro', isa => Str );
+    use MooX::Types::MooseLike::Base qw/ Str /;
+    has i => ( is => 'ro', isa => Str );
 }
 
 use Benchmark qw/ cmpthese /;
@@ -33,40 +32,45 @@ use Try::Tiny;
 
 use common::sense;
 
-sub simple {
+sub failover {
     C->new( i => 'x', failover_to => 'D' );
 }
 
-sub exception_try {
-    try { A->new( i => 'x' ) } catch { D->new() };
+sub try_catch {
+    try { A->new( i => 'x' ) } catch { D->new( i => 'x' ) };
 }
 
-sub exception_eval {
-    eval { A->new( i => 'x' ) } // D->new();
+sub eval_block {
+    eval { A->new( i => 'x' ) } // D->new( i => 'x' );
 }
 
-sub simple_pass {
+sub failover_ok {
     C->new( i => '1', failover_to => 'D' );
 }
 
-sub no_exception {
-    try { A->new( i => '1' ) } catch { D->new() };
+sub try_catch_ok {
+    try { A->new( i => '1' ) } catch { D->new( i => '1' ) };
+}
+
+sub eval_block_ok {
+    eval { A->new( i => '1' ) } // D->new( i => '1' );
 }
 
 cmpthese(
     10_000,
     {
-        failover => 'simple',
-        try      => 'exception_try',
-        eval     => 'exception_eval',
+        failover   => 'failover',
+        try_catch  => 'try_catch',
+        eval_block => 'eval_block',
     }
 );
 
 cmpthese(
-    30_000,
+    20_000,
     {
-        no_failover => 'simple_pass',
-        no_error    => 'no_exception',
+        failover   => 'failover_ok',
+        try_catch  => 'try_catch_ok',
+        eval_block => 'eval_block_ok',
     }
 );
 
