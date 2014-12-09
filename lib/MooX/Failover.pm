@@ -158,31 +158,26 @@ around new => sub {
 
     eval { $class->$orig(%args) } // do {
 
-        my $failover = $args{failover_to};
+        my $failover = delete $args{failover_to};
         my $next = ( ref $failover ) ? $failover : { class => $failover };
+
+        %args = %{ $next->{args} } if $next->{args};
+        $args{ $next->{err_arg} } = $@ if defined $next->{err_arg};
 
         $next->{err_arg} = 'error' unless exists $next->{err_arg};
 
-        my $error = $@;
-        my $next_next;
-        my $next_class = $next->{class};
-        if ( ref $next_class ) {
-            $next_class = shift @{ $next->{class} };
-            $next_next  = $next;
+        $class = $next->{class};
+        if ( ref $class ) {
+            $class = shift @{ $next->{class} };
+            $args{failover_to} = $next;
         }
 
-        croak $error unless $next_class;
+        croak $@ unless $class;
 
-        try_load_class($next_class)
-          or croak "unable to load class ${next_class}";
+        try_load_class($class)
+          or croak "unable to load class ${class}";
 
-        %args = %{ $next->{args} } if $next->{args};
-
-        $args{ $next->{err_arg} } = $error if defined $next->{err_arg};
-        $args{failover_to} = $next_next if $next_next;
-
-        $next_class->new( %args, );
-
+        $class->new( %args );
     };
 
 };
