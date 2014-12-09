@@ -162,6 +162,7 @@ around new => sub {
         my %next = ( ref $failover ) ? %{$failover} : ( class => $failover );
 
         %args = %{ $next{args} } if $next{args};
+
         $next{err_arg} = 'error' unless exists $next{err_arg};
         $args{ $next{err_arg} } = $@ if defined $next{err_arg};
 
