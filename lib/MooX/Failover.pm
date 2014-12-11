@@ -1,13 +1,14 @@
 package MooX::Failover;
 
-use Moo::Role;
+require Moo;
 
 use Carp;
-use Class::Load qw/ try_load_class /;
+use Sub::Defer qw/ undefer_sub /;
+use Sub::Quote qw/ quote_sub /;
 
 {
     use version 0.77;
-    $MooX::Failover::VERSION = version->declare('v0.1.0_02');
+    $MooX::Failover::VERSION = version->declare('v0.2.0_01');
 }
 
 # RECOMMEND PREREQ: Class::Load::XS
@@ -153,34 +154,44 @@ rough benchmarks suggest several times slower.
 
 =cut
 
-around new => sub {
-    my ( $orig, $class, %args ) = @_;
+sub import {
+    my $caller = caller;
+    my $name = 'failover_to';
+    my $code = \&failover_to;
+    my $this = __PACKAGE__ . "::${name}";
+    my $that = "${caller}::${name}";
+    $Moo::MAKERS{$caller}{exports}{$name} = $code;
+    Moo::_install_coderef( $that, $this => $code );
+}
 
-    eval { $class->$orig(%args) } // do {
+sub unimport {
+    my $caller = caller;
+    Moo::_unimport_coderefs( $caller,
+        { exports => { 'failover_to' => \&failover_to } } );
+}
 
-        my $failover = delete $args{failover_to};
-        my %next = ( ref $failover ) ? %{$failover} : ( class => $failover );
+sub failover_to {
+    my %next = ( @_ == 1 ) ? ( class => @_ ) : @_;
 
-        %args = %{ $next{args} } if $next{args};
+    $next{class}
+      or croak "no class defined";
 
-        $next{err_arg} = 'error' unless exists $next{err_arg};
-        $args{ $next{err_arg} } = $@ if defined $next{err_arg};
+    my $caller = caller;
 
-        $class = $next{class};
-        if ( ref $class ) {
-            $class = shift @{ $next{class} };
-            $args{failover_to} = \%next;
-        }
+    no strict 'refs';
 
-        croak $@ unless $class;
+    my $name = "${caller}::new";
+    my $orig = undefer_sub \&{$name};
 
-        try_load_class($class)
-          or croak "unable to load class ${class}";
-
-        $class->new(%args);
-    };
-
-};
+    quote_sub $name, q{
+      my $class = shift;
+      eval { $class->$orig(@_); } || $next{class}->new(@_, error => $@);
+    },
+      {
+        '$orig' => \$orig,
+        '%next' => \%next
+      };
+}
 
 =for readme continue
 
@@ -222,7 +233,5 @@ without any warranty; without even the implied warranty of
 merchantability or fitness for a particular purpose.
 
 =cut
-
-use namespace::clean;
 
 1;
