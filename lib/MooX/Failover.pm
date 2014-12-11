@@ -156,10 +156,10 @@ rough benchmarks suggest several times slower.
 
 sub import {
     my $caller = caller;
-    my $name = 'failover_to';
-    my $code = \&failover_to;
-    my $this = __PACKAGE__ . "::${name}";
-    my $that = "${caller}::${name}";
+    my $name   = 'failover_to';
+    my $code   = \&failover_to;
+    my $this   = __PACKAGE__ . "::${name}";
+    my $that   = "${caller}::${name}";
     $Moo::MAKERS{$caller}{exports}{$name} = $code;
     Moo::_install_coderef( $that, $this => $code );
 }
@@ -173,7 +173,7 @@ sub unimport {
 sub failover_to {
     my %next = ( @_ == 1 ) ? ( class => @_ ) : @_;
 
-    $next{class}
+    my $next_class = $next{class}
       or croak "no class defined";
 
     my $caller = caller;
@@ -185,11 +185,12 @@ sub failover_to {
 
     quote_sub $name, q{
       my $class = shift;
-      eval { $class->$orig(@_); } || $next{class}->new(@_, error => $@);
+      eval { $class->$orig(@_); } // $next_class->new(@_, error => $@);
     },
       {
-        '$orig' => \$orig,
-        '%next' => \%next
+        '$orig'       => \$orig,
+        '%next'       => \%next,
+        '$next_class' => \$next_class,
       };
 }
 
