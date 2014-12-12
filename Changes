@@ -1,8 +1,17 @@
 Revision history for MooX-Failover
 
 {{$NEXT}}
+  [Incompatability]
+  - Rewrote the interface entirely, so that the failover is specified
+    as part of the class definition. See the POD for details.
+
   [Enhancements]
-  - Minor optimizations.
+  - Significant optimizations at the expense of incompatability.
+
+  - Added the ability to use an alternative name of the constructor
+    for the failover class.
+
+  - Arguments for the constructor can be a hash reference, array reference
 
   [Other Changes]
   - Added missing MANIFEST.SKIP and removed dist.ini from

@@ -13,10 +13,11 @@
     package C;
     use Moo;
     use MooX::Types::MooseLike::Base qw/ Int /;
+    use MooX::Failover;
 
     has i => ( is => 'ro', isa => Int );
 
-    with 'MooX::Failover';
+    failover_to 'D';
 }
 
 {
@@ -33,7 +34,7 @@ use Try::Tiny;
 use common::sense;
 
 sub failover {
-    C->new( i => 'x', failover_to => 'D' );
+    C->new( i => 'x');
 }
 
 sub try_catch {
@@ -45,7 +46,7 @@ sub eval_block {
 }
 
 sub failover_ok {
-    C->new( i => '1', failover_to => 'D' );
+    C->new( i => '1' );
 }
 
 sub try_catch_ok {

@@ -4,7 +4,7 @@ MooX::Failover - Instantiate Moo classes with failover
 
 =head1 VERSION
 
-v0.1.0_02
+v0.2.0_01
 
 =head1 SYNOPSIS
 
@@ -13,14 +13,19 @@ v0.1.0_02
   package MyClass;
 
   use Moo;
+  use MooX::Failover;
 
   has 'attr' => ( ... );
 
-  with 'MooX::Failover'; # use *after* attributes are declared
+  # after attributes are defined:
+
+  failover_to 'OtherClass';
+
+  ...
 
   # When using the class
 
-  my $obj = MyClass->new( %args, failover_to => 'OtherClass' );
+  my $obj = MyClass->new( %args );
 
   # If %args contains missing or invalid values or new otherwise
   # fails, then $obj will be of type "OtherClass".
@@ -42,6 +47,10 @@ This distribution requires the following modules:
 
 =item * L<Moo>
 
+=item * L<Sub::Defer>
+
+=item * L<Sub::Quote>
+
 =item * L<Test::Most>
 
 =back
@@ -62,7 +71,25 @@ This distribution recommends the following modules:
 
 =item * 
 
-Minor optimizations.
+Significant optimizations at the expense of incompatability.
+
+=item * 
+
+Added the ability to use an alternative name of the constructor for the failover class.
+
+=item * 
+
+Arguments for the constructor can be a hash reference, array reference
+
+=back
+
+=head2 Incompatability
+
+=over 4
+
+=item * 
+
+Rewrote the interface entirely, so that the failover is specified as part of the class definition. See the POD for details.
 
 =back
 
@@ -105,12 +132,6 @@ class are also provable of the failover class.  In practice, we only
 care about the properties (methods and attributes) that are actually
 used in our programs.
 
-=head1 CAVEATS
-
-This module is experimental. It works, but the current version is
-significantly slower than using a simple eval or try block.  So it's
-not recommended for production code.
-
 =head1 SEE ALSO
 
 L<MooseX::Failover>
@@ -126,8 +147,6 @@ Robert Rothenberg C<<rrwo@thermeon.com>>
 =item Thermeon Europe.
 
 =item Piers Cawley.
-
-=item Graham Knop.
 
 =back
 
