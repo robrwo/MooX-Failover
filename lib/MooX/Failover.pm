@@ -3,6 +3,7 @@ package MooX::Failover;
 require Moo;
 
 use Carp;
+use Class::Load qw/ try_load_class /;
 use Sub::Defer qw/ undefer_sub /;
 use Sub::Quote qw/ quote_sub /;
 
@@ -170,28 +171,56 @@ sub unimport {
         { exports => { 'failover_to' => \&failover_to } } );
 }
 
+sub _ref_to_list {
+  my ($next) = @_;
+
+  my $args = $next{args} // [ '@_' ];
+  if (my $ref = ref $args) {
+
+    return (@{$args}) if $ref eq 'ARRAY';
+    return (%{$args}) if $ref eq 'HASH';
+
+    croak "args must be an ArrayRef, HashRef or Str";
+
+  } else {
+
+    return ($args);
+
+  }
+
+}
+
+
 sub failover_to {
     my %next = ( @_ == 1 ) ? ( class => @_ ) : @_;
 
-    my $next_class = $next{class}
-      or croak "no class defined";
+    $next{class} or croak "no class defined";
+
+    try_load_class( $next{class} )
+      or croak "unable to load " . $next{class};
 
     my $caller = caller;
 
-    no strict 'refs';
+    $next{constructor} //= 'new';
+
+    croak $next{class}. ' cannot ' . $next{constructor}
+      unless $next{class}->can($next{constructor});
+
+    $next{err_arg} //= 'error' unless exists $next{err_arg};
 
     my $name = "${caller}::new";
     my $orig = undefer_sub \&{$name};
 
-    quote_sub $name, q{
-      my $class = shift;
-      eval { $class->$orig(@_); } // $next_class->new(@_, error => $@);
-    },
-      {
-        '$orig'       => \$orig,
-        '%next'       => \%next,
-        '$next_class' => \$next_class,
-      };
+    my @args = _ref_to_list($next);
+    push @args, $next{err_arg} . ' => $@' if defined $next{err_arg};
+
+    my $code_str =
+        'my $class = shift; eval { $class->$orig(@_); }' . ' // '
+      . $next{class} . '->'
+      . $next{constructor} . '('
+      . join( ',', @args ) . ')';
+
+    quote_sub $name, $code_str, { '$orig' => \$orig, };
 }
 
 =for readme continue
