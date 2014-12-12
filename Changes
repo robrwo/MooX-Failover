@@ -1,6 +1,10 @@
 Revision history for MooX-Failover
 
 {{$NEXT}}
+  [Enhancements]
+  - Added check that we don't failover to the same class.
+
+v0.2.0_01 2014-12-12 15:49:50+00:00 Europe/London
   [Incompatability]
   - Rewrote the interface entirely, so that the failover is specified
     as part of the class definition. See the POD for details.

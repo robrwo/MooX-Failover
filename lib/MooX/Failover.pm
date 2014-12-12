@@ -9,7 +9,7 @@ use Sub::Quote qw/ quote_sub /;
 
 {
     use version 0.77;
-    $MooX::Failover::VERSION = version->declare('v0.2.0_01');
+    $MooX::Failover::VERSION = version->declare('v0.2.0_02');
 }
 
 # RECOMMEND PREREQ: Class::Load::XS
@@ -201,6 +201,7 @@ sub failover_to {
       or croak "unable to load " . $next{class};
 
     my $caller = caller;
+    croak "cannot failover to self" if $next{class} eq $caller;
 
     $next{constructor} //= 'new';
 
