@@ -65,28 +65,33 @@ If a class cannot be instantiated because of invalid arguments
 (perhaps from an untrusted source), then instead it returns the
 failover class (passing the same arguments to that class).
 
-This allows for cleaner design, by not forcing you to duplicate type
-checking for class parameters.
-
-Note that this is roughly equivalent to using
+It is roughly equivalent to using
 
   my $obj = eval { MyClass->new(%args) //
      OtherClass->new( %args, error => $@ );
 
-Note that your failover class should support the same methods as the
-original class.  A use case for this role would be for instantiating
-L<Web::Machine::Resource> objects, where the failover is a
-Web::Machine::Resource object that returns an error page.
+This allows for cleaner design, by not forcing you to duplicate type
+checking for class parameters.
 
-Ideally, your failover class would satisy the Liskov Substitution
-Principle, so that (roughly) all provable properties of the original
-class are also provable of the failover class.  In practice, we only
-care about the properties (methods and attributes) that are actually
-used in our programs.
+A use case for this module is for instantiating
+L<Web::Machine::Resource> objects, where a resource class's attributes
+correspond to URL arguments.  A type failure would normally cause an
+internal serror error (HTTP 500).  Using L<MooX::Failover>, we can
+return a different resource object that examines the error, and
+returns a more appropriate error code, e.g. bad request (HTTP 400).
+
+Your failover class should support the same methods as the original
+class, so that it (roughly) satisfies the Liskov Substitution
+Principle, where all provable properties of the original class are
+also provable of the failover class.  In practice, we only care about
+the properties (methods and attributes) that are actually used in our
+programs.
 
 =for readme stop
 
 =head1 EXPORTS
+
+The following function is always exported:
 
 =head2 C<failover_to>
 
@@ -134,6 +139,10 @@ To disable it, set it to C<undef>.
 
 This was originally a L<Moo> port of L<MooseX::Failover>.  The
 interface was redesigned significantly, to be more efficient.
+
+=head1 ATTRIBUTES
+
+None. Since v0.2.0, there is no longer a C<failover_to> attribute.
 
 =cut
 
