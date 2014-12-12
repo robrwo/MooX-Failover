@@ -80,14 +80,14 @@ internal serror error (HTTP 500).  Using L<MooX::Failover>, we can
 return a different resource object that examines the error, and
 returns a more appropriate error code, e.g. bad request (HTTP 400).
 
+=for readme stop
+
 Your failover class should support the same methods as the original
 class, so that it (roughly) satisfies the Liskov Substitution
 Principle, where all provable properties of the original class are
 also provable of the failover class.  In practice, we only care about
 the properties (methods and attributes) that are actually used in our
 programs.
-
-=for readme stop
 
 =head1 EXPORTS
 
