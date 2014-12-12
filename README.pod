@@ -79,7 +79,7 @@ Added the ability to use an alternative name of the constructor for the failover
 
 =item * 
 
-Arguments for the constructor can be a hash reference, array reference
+Arguments for the constructor can be a hash reference, array reference or scalar.
 
 =back
 
