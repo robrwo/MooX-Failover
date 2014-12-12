@@ -105,6 +105,10 @@ Rewrote the interface entirely, so that the failover is specified as part of the
 
 Added missing MANIFEST.SKIP and removed dist.ini from distribution.
 
+=item * 
+
+Added an example using Web::Machine.
+
 =back
 
 See the F<Changes> file for a longer revision history.
