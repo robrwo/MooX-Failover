@@ -14,6 +14,9 @@ Revision history for MooX-Failover
   - Arguments for the constructor can be a hash reference, array
     reference or scalar.
 
+  - Added the ability to save the name of the class that triggered to
+    error.
+
   [Other Changes]
   - Added missing MANIFEST.SKIP and removed dist.ini from
     distribution.

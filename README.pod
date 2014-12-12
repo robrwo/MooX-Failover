@@ -81,6 +81,10 @@ Added the ability to use an alternative name of the constructor for the failover
 
 Arguments for the constructor can be a hash reference, array reference or scalar.
 
+=item * 
+
+Added the ability to save the name of the class that triggered to error.
+
 =back
 
 =head2 Incompatability

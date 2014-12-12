@@ -1,10 +1,15 @@
 {
+
     package Failover;
 
     use Moo;
+    use MooX::Types::MooseLike::Base qw/ Str /;
 
     has error => ( is => 'ro', );
-
+    has class => (
+        is  => 'ro',
+        isa => Str
+    );
 }
 
 {
@@ -53,8 +58,6 @@
         init_arg => 'str',
     );
 
-
-
 }
 
 use Test::Most;
@@ -89,7 +92,7 @@ use Test::Most;
     my $obj = Sub1->new( num => 123, );
     isa_ok $obj, 'Failover';
     like $obj->error, qr/Missing required arguments: r_str/, 'expected error';
-
+    is $obj->class, 'Sub1', 'expected class';
 }
 
 done_testing;

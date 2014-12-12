@@ -135,6 +135,13 @@ parameters.
 
 To disable it, set it to C<undef>.
 
+=item C<class_arg>
+
+This is the name of the constructor argument to pass the name class
+that failed.  It defaults to "class".
+
+To disable it, set it to C<undef>.
+
 =back
 
 This was originally a L<Moo> port of L<MooseX::Failover>.  The
@@ -200,13 +207,16 @@ sub failover_to {
     croak $next{class} . ' cannot ' . $next{constructor}
       unless $next{class}->can( $next{constructor} );
 
-    $next{err_arg} //= 'error' unless exists $next{err_arg};
+    $next{err_arg}   //= 'error' unless exists $next{err_arg};
+    $next{class_arg} //= 'class' unless exists $next{class_arg};
 
     my $name = "${caller}::new";
     my $orig = undefer_sub \&{$name};
 
     my @args = _ref_to_list($next);
     push @args, $next{err_arg} . ' => $@' if defined $next{err_arg};
+    push @args, $next{class_arg} . " => '${caller}'"
+      if defined $next{class_arg};
 
     my $code_str =
         'my $class = shift; eval { $class->$orig(@_); }' . ' // '
