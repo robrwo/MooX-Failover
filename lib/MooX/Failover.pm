@@ -27,14 +27,19 @@ MooX::Failover - Instantiate Moo classes with failover
   package MyClass;
 
   use Moo;
+  use MooX::Failover;
 
   has 'attr' => ( ... );
 
-  with 'MooX::Failover'; # use *after* attributes are declared
+  # after attributes are defined:
+
+  failover_to 'OtherClass';
+
+  ...
 
   # When using the class
 
-  my $obj = MyClass->new( %args, failover_to => 'OtherClass' );
+  my $obj = MyClass->new( %args );
 
   # If %args contains missing or invalid values or new otherwise
   # fails, then $obj will be of type "OtherClass".
@@ -81,24 +86,36 @@ used in our programs.
 
 =for readme stop
 
-=head1 ARGUMENTS
+=head1 EXPORTS
 
 =head2 C<failover_to>
 
-This argument should contain a hash reference with the following keys:
+  failover_to $class => %options;
+
+This specifies the class to instantiate if the constructor dies.
+
+It should be specified I<after> all of the attributes have been
+declared.
+
+The following options are supported.
 
 =over
 
 =item C<class>
 
-The name of the class to fail over to.
+The name of the class to fail over to.  It defaults to C<$class>.
 
-This can be an array reference of multiple classes.
+=item C<constructor>
+
+The name of the constructor method. It defaults to "new".
 
 =item C<args>
 
-A hash reference of arguments to pass to the failover class.  When
-omitted, then the same arguments will be passed to it.
+The arguments to pass to the failover class. When omitted, it will
+pass the same arguments as the original class.
+
+This can be a scalar (single argument), hash reference or array
+reference.
 
 =item C<err_arg>
 
@@ -115,43 +132,8 @@ To disable it, set it to C<undef>.
 
 =back
 
-Note that
-
-  failover_to => 'OtherClass'
-
-is equivalent to
-
-  failover_to => { class => 'OtherClass' }
-
-Note that this is not an attribute.Failover attributes from parent classes are not used. (This
-restriction is to improve the performance.)
-
-This is a L<Moo> port of L<MooseX::Failover>. The only differences are
-that:
-
-=over
-
-item 1.
-
-You need to consume the role I<after> the attributes have been
-declared.
-
-=item 2.
-
-A default C<failover_to> attribute cannot be declared in the
-class. You must specify it in an argument.
-
-=item
-
-This is signficantly slower than using an
-
-  my $obj = eval { MyClass->new(%args) //
-     OtherClass->new( %args, error => $@ );
-
-for the L<Moo> version than the L<Moose> version of this module.  Some
-rough benchmarks suggest several times slower.
-
-=back
+This was originally a L<Moo> port of L<MooseX::Failover>.  The
+interface was redesigned significantly, to be more efficient.
 
 =cut
 
@@ -172,27 +154,30 @@ sub unimport {
 }
 
 sub _ref_to_list {
-  my ($next) = @_;
+    my ($next) = @_;
 
-  my $args = $next{args} // [ '@_' ];
-  if (my $ref = ref $args) {
+    my $args = $next{args} // ['@_'];
+    if ( my $ref = ref $args ) {
 
-    return (@{$args}) if $ref eq 'ARRAY';
-    return (%{$args}) if $ref eq 'HASH';
+        return ( @{$args} ) if $ref eq 'ARRAY';
+        return ( %{$args} ) if $ref eq 'HASH';
 
-    croak "args must be an ArrayRef, HashRef or Str";
+        croak "args must be an ArrayRef, HashRef or Str";
 
-  } else {
+    }
+    else {
 
-    return ($args);
+        return ($args);
 
-  }
+    }
 
 }
 
-
 sub failover_to {
-    my %next = ( @_ == 1 ) ? ( class => @_ ) : @_;
+    my $class = shift;
+    my %next  = @_;
+
+    $next{class} //= $class;
 
     $next{class} or croak "no class defined";
 
@@ -203,8 +188,8 @@ sub failover_to {
 
     $next{constructor} //= 'new';
 
-    croak $next{class}. ' cannot ' . $next{constructor}
-      unless $next{class}->can($next{constructor});
+    croak $next{class} . ' cannot ' . $next{constructor}
+      unless $next{class}->can( $next{constructor} );
 
     $next{err_arg} //= 'error' unless exists $next{err_arg};
 
@@ -225,12 +210,6 @@ sub failover_to {
 
 =for readme continue
 
-=head1 CAVEATS
-
-This module is experimental. It works, but the current version is
-significantly slower than using a simple eval or try block.  So it's
-not recommended for production code.
-
 =head1 SEE ALSO
 
 L<MooseX::Failover>
@@ -246,8 +225,6 @@ Robert Rothenberg C<<rrwo@thermeon.com>>
 =item Thermeon Europe.
 
 =item Piers Cawley.
-
-=item Graham Knop.
 
 =back
 

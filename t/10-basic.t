@@ -34,7 +34,7 @@
         default  => 'wibble',
     );
 
-    failover_to class => 'Failover';
+    failover_to 'Failover';
 }
 
 {
