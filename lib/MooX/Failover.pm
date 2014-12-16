@@ -211,8 +211,11 @@ sub failover_to {
     $next{err_arg}   //= 'error' unless exists $next{err_arg};
     $next{class_arg} //= 'class' unless exists $next{class_arg};
 
-    my $name = "${caller}::new";
-    my $orig = undefer_sub \&{$name};
+    my $orig_name = "${caller}::new";
+    my $orig_code = undefer_sub \&{$orig_name};
+
+    my $next_name = $next{class} . '::' . $next{constructor};
+    my $next_code = undefer_sub \&{$next_name};
 
     my @args = _ref_to_list($next);
     push @args, $next{err_arg} . ' => $@' if defined $next{err_arg};
@@ -220,12 +223,13 @@ sub failover_to {
       if defined $next{class_arg};
 
     my $code_str =
-        'my $class = shift; eval { $class->$orig(@_); }' . ' // '
-      . $next{class} . '->'
-      . $next{constructor} . '('
+        'eval { shift->$orig(@_); }' . ' // ' . $next{class} . '->$cont(' 
       . join( ',', @args ) . ')';
 
-    quote_sub $name, $code_str, { '$orig' => \$orig, };
+    quote_sub $orig_name, $code_str, {
+	'$orig' => \$orig_code,
+	'$cont' => \$next_code,
+    };
 }
 
 =for readme continue
