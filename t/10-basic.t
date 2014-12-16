@@ -1,25 +1,12 @@
 {
 
-    package Failover;
-
-    use Moo;
-    use Types::Standard qw/ Str /;
-
-    has error => ( is => 'ro', );
-    has class => (
-        is  => 'ro',
-        isa => Str
-    );
-}
-
-{
-
     package Sub1;
 
     use Moo;
     use Types::Standard qw/ Int Str /;
 
     use MooX::Failover;
+    use lib 't/lib';
 
     has num => (
         is  => 'ro',
