@@ -59,9 +59,9 @@ L<How to install CPAN modules|http://www.cpan.org/modules/INSTALL.html>.
 
 =head1 DESCRIPTION
 
-This role provides constructor failover for L<Moo> classes.
+This module provides constructor failover for L<Moo> classes.
 
-If a class cannot be instantiated because of invalid arguments
+For example, if a class cannot be instantiated because of invalid arguments
 (perhaps from an untrusted source), then instead it returns the
 failover class (passing the same arguments to that class).
 
@@ -71,7 +71,7 @@ It is roughly equivalent to using
      OtherClass->new( %args, error => $@ );
 
 This allows for cleaner design, by not forcing you to duplicate type
-checking for class parameters.
+checking for constructor parameters.
 
 A use case for this module is for instantiating
 L<Web::Machine::Resource> objects, where a resource class's attributes
@@ -246,7 +246,7 @@ Robert Rothenberg C<<rrwo@thermeon.com>>
 
 =over
 
-=item Thermeon Europe.
+=item Thermeon.
 
 =item Piers Cawley.
 
@@ -254,7 +254,7 @@ Robert Rothenberg C<<rrwo@thermeon.com>>
 
 =head1 COPYRIGHT
 
-Copyright 2014 Thermeon Europe.
+Copyright 2014 Thermeon Worldwide, PLC.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
