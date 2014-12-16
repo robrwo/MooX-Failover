@@ -80,6 +80,12 @@ internal serror error (HTTP 500).  Using L<MooX::Failover>, we can
 return a different resource object that examines the error, and
 returns a more appropriate error code, e.g. bad request (HTTP 400).
 
+=begin :readme
+
+See the module documentation for L<MooX::Failover> for more information.
+
+=end :readme
+
 =for readme stop
 
 Your failover class should support the same methods as the original
