@@ -28,10 +28,11 @@
     has i => ( is => 'ro', isa => Str );
 }
 
+use strict;
+use warnings;
+
 use Benchmark qw/ cmpthese /;
 use Try::Tiny;
-
-use common::sense;
 
 sub failover {
     C->new( i => 'x');
