@@ -1,6 +1,6 @@
 Revision history for MooX-Failover
 
-{{$NEXT}}
+v0.2.1    2014-12-16 12:20:06+00:00 UTC
   [Enhancements]
   - Added check that we don't failover to the same class.
 
