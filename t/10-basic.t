@@ -74,7 +74,7 @@ use Test::Most;
 }
 
 {
-    note "errors with no failover";
+    note "errors with failover";
 
     my $obj = Sub1->new( num => 123, );
     isa_ok $obj, 'Failover';
