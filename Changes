@@ -10,7 +10,7 @@ Revision history for MooX-Failover
   - Minor wording changes.
 
   [Bug Fixes]
-  - Fixed bad prereqs for tests.
+  - Fixed bad prereqs for tests, which now uses Types::Standard.
 
 v0.2.0_01 2014-12-12 15:49:50+00:00 Europe/London
   [Incompatability]

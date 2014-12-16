@@ -3,7 +3,7 @@
     package Failover;
 
     use Moo;
-    use MooX::Types::MooseLike::Base qw/ Str /;
+    use Types::Standard qw/ Str /;
 
     has error => ( is => 'ro', );
     has class => (
@@ -17,7 +17,7 @@
     package Sub1;
 
     use Moo;
-    use MooX::Types::MooseLike::Base qw/ Int Str /;
+    use Types::Standard qw/ Int Str /;
 
     use MooX::Failover;
 
@@ -49,7 +49,7 @@
     use Moo;
     extends 'Sub1';
 
-    use MooX::Types::MooseLike::Base qw/ Str /;
+    use Types::Standard qw/ Str /;
 
     has q_str => (
         is       => 'ro',
