@@ -7,6 +7,8 @@
     has 'error2' => ( is => 'ro' );
     has 'class2' => ( is => 'ro', isa => Str );
 
+    has 'num'  => ( is => 'ro' ); # can be anything
+
     has 'args' => ( is => 'ro', isa => ArrayRef );
 
     our $count = 0;
@@ -54,6 +56,7 @@
     failover_to 'Failover2' => (
                                 err_arg => 'error2', class_arg => 'class2', constructor => 'alt_new',
       from_constructor => 'other',
+      args => [ ],
       orig_arg => 'args',
     );
 
@@ -108,6 +111,7 @@ use Test::Most;
 
     my $obj = Sub1->new( num => 123, );
     isa_ok $obj, 'Failover2';
+    is $obj->num, 123, 'original argument passed';
     is $Failover2::count, 1, 'alternative constructor run';
     like $obj->error2, qr/Missing required arguments: r_str/, 'expected error';
     is $obj->class2, 'Sub1', 'expected class';
@@ -130,6 +134,7 @@ use Test::Most;
     like $obj->error2, qr/bad constructor/, 'expected error';
     is $obj->class2, 'Sub1', 'expected class';
 
+    is $obj->num, undef, 'no original argument';
     is_deeply $obj->args, [ num => 123, nonsense => 'x' ], 'extected orig_args';
 
 }

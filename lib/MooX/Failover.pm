@@ -1,5 +1,8 @@
 package MooX::Failover;
 
+use strict;
+use warnings;
+
 require Moo;
 
 use Carp;
@@ -175,6 +178,14 @@ original arguments passed to class.  It is C<undef> by default.
 The original arguments are already passed to the failover class, but
 this can be used to pass them all in a specific parameter.
 
+If you do not want the original arguments passed to the failover class
+separately, set the C<args> option to be empty:
+
+  failover_to 'OtherClass' => (
+    args      => [ ],
+    orig_args => 'failed_args',
+  );
+
 This option was added in v0.3.0.
 
 =back
@@ -207,7 +218,7 @@ sub unimport {
 sub _ref_to_list {
     my ($next) = @_;
 
-    my $args = $next{args} // ['@_'];
+    my $args = $next->{args} // ['@_'];
     if ( my $ref = ref $args ) {
 
         return ( @{$args} ) if $ref eq 'ARRAY';
@@ -253,7 +264,7 @@ sub failover_to {
     my $next_name = $next{class} . '::' . $next{constructor};
     my $next_code = undefer_sub \&{$next_name};
 
-    my @args = _ref_to_list($next);
+    my @args = _ref_to_list(\%next);
     push @args, $next{err_arg} . ' => $@' if defined $next{err_arg};
     push @args, $next{class_arg} . " => '${caller}'"
       if defined $next{class_arg};

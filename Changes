@@ -14,6 +14,9 @@ Revision history for MooX-Failover
   - Added the ability to pass all of the original arguments in a
     single constructor parameter to the failover class.
 
+  [Bug Fixes]
+  - Fixed bug with handling the "args" option.
+
 v0.2.1    2014-12-16 12:20:06+00:00 UTC
   [Enhancements]
   - Added check that we don't failover to the same class.
