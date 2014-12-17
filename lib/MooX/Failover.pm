@@ -118,7 +118,8 @@ The name of the class to fail over to.  It defaults to C<$class>.
 
 =item C<constructor>
 
-The name of the constructor method. It defaults to "new".
+The name of the constructor method in the failover class. It defaults
+to "new".
 
 =item C<args>
 

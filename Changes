@@ -1,6 +1,9 @@
 Revision history for MooX-Failover
 
 {{$NEXT}}
+  [Documentation]
+  - Changed description of the "constructor" option to remove any
+    confusion which class it applies to.
 
 v0.2.1    2014-12-16 12:20:06+00:00 UTC
   [Enhancements]
