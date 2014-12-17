@@ -44,6 +44,16 @@
     );
 
     failover_to 'Failover2' => ( err_arg => 'error2', class_arg => 'class2', constructor => 'alt_new' );
+
+    sub other {
+      die "bad constructor";
+    }
+
+    failover_to 'Failover2' => (
+                                err_arg => 'error2', class_arg => 'class2', constructor => 'alt_new',
+      from_constructor => 'other',
+    );
+
 }
 
 {
@@ -106,6 +116,15 @@ use Test::Most;
     my $obj = Sub1->new( num => 123, );
     isa_ok $obj, 'Failover2';
     like $obj->error2, qr/Missing required arguments: r_str/, 'expected error';
+    is $obj->class2, 'Sub1', 'expected class';
+}
+
+{
+    note "errors with failover using alternative from_constructor";
+
+    my $obj = Sub1->other( num => 123, );
+    isa_ok $obj, 'Failover2';
+    like $obj->error2, qr/bad constructor/, 'expected error';
     is $obj->class2, 'Sub1', 'expected class';
 }
 

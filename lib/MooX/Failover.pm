@@ -121,6 +121,22 @@ The name of the class to fail over to.  It defaults to C<$class>.
 The name of the constructor method in the failover class. It defaults
 to "new".
 
+=item C<from_constructor>
+
+The name of the constructor in the class that you are adding failover
+to. It defaults to "new".
+
+Note that you can add failovers to multiple constructors. Suppose your
+class has a "new" constructor, as well as a "new_from_file"
+constructor that loads information from a file and then calls "new".
+You can specify failovers for both of the constructors:
+
+  failover_to 'OtherClass';
+
+  failover_to 'OtherClass' => (
+    from_constructor => 'new_from_file',
+  );
+
 =item C<args>
 
 The arguments to pass to the failover class. When omitted, it will
@@ -210,6 +226,7 @@ sub failover_to {
     my $caller = caller;
     croak "cannot failover to self" if $next{class} eq $caller;
 
+    $next{from_constructor} //= 'new';
     $next{constructor} //= 'new';
 
     croak $next{class} . ' cannot ' . $next{constructor}
@@ -218,7 +235,7 @@ sub failover_to {
     $next{err_arg}   //= 'error' unless exists $next{err_arg};
     $next{class_arg} //= 'class' unless exists $next{class_arg};
 
-    my $orig_name = "${caller}::new";
+    my $orig_name = $caller . '::' . $next{from_constructor};
     my $orig_code = undefer_sub \&{$orig_name};
 
     my $next_name = $next{class} . '::' . $next{constructor};
