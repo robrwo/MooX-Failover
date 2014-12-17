@@ -137,6 +137,8 @@ You can specify failovers for both of the constructors:
     from_constructor => 'new_from_file',
   );
 
+This option was added in v0.3.0.
+
 =item C<args>
 
 The arguments to pass to the failover class. When omitted, it will
