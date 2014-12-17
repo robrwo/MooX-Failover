@@ -4,7 +4,7 @@ MooX::Failover - Instantiate Moo classes with failover
 
 =head1 VERSION
 
-v0.2.1
+v0.3.0
 
 =head1 SYNOPSIS
 
@@ -73,7 +73,7 @@ This distribution recommends the following modules:
 
 =item * 
 
-Fixed bad prereqs for tests, which now uses Types::Standard.
+Fixed bug with handling the "args" option.
 
 =back
 
@@ -83,7 +83,15 @@ Fixed bad prereqs for tests, which now uses Types::Standard.
 
 =item * 
 
-Minor wording changes.
+Changed description of the "constructor" option to remove any confusion which class it applies to.
+
+=item * 
+
+Documented the need for quoting values in the "args" option.
+
+=item * 
+
+Fixed typos in POD.
 
 =back
 
@@ -93,21 +101,11 @@ Minor wording changes.
 
 =item * 
 
-Added check that we don't failover to the same class.
+Added the ability to specify an alternative constructor name on the original class.
 
 =item * 
 
-Minor performance tweaks.
-
-=back
-
-=head2 Other Changes
-
-=over 4
-
-=item * 
-
-Added more tests
+Added the ability to pass all of the original arguments in a single constructor parameter to the failover class.
 
 =back
 
