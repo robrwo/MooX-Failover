@@ -9,7 +9,7 @@ use Sub::Quote qw/ quote_sub /;
 
 {
     use version 0.77;
-    $MooX::Failover::VERSION = version->declare('v0.2.1');
+    $MooX::Failover::VERSION = version->declare('v0.2.2');
 }
 
 # RECOMMEND PREREQ: Class::Load::XS
