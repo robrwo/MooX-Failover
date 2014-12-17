@@ -2,10 +2,12 @@
     package Failover2;
 
     use Moo;
-    use Types::Standard qw/ Str /;
+    use Types::Standard qw/ Str ArrayRef /;
 
     has 'error2' => ( is => 'ro' );
     has 'class2' => ( is => 'ro', isa => Str );
+
+    has 'args' => ( is => 'ro', isa => ArrayRef );
 
     our $count = 0;
 
@@ -52,6 +54,7 @@
     failover_to 'Failover2' => (
                                 err_arg => 'error2', class_arg => 'class2', constructor => 'alt_new',
       from_constructor => 'other',
+      orig_arg => 'args',
     );
 
 }
@@ -122,10 +125,13 @@ use Test::Most;
 {
     note "errors with failover using alternative from_constructor";
 
-    my $obj = Sub1->other( num => 123, );
+    my $obj = Sub1->other( num => 123, nonsense => 'x' );
     isa_ok $obj, 'Failover2';
     like $obj->error2, qr/bad constructor/, 'expected error';
     is $obj->class2, 'Sub1', 'expected class';
+
+    is_deeply $obj->args, [ num => 123, nonsense => 'x' ], 'extected orig_args';
+
 }
 
 

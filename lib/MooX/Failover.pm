@@ -167,6 +167,16 @@ class that failed.  It defaults to "class".
 
 To disable it, set it to C<undef>.
 
+=item C<orig_arg>
+
+This is the name of the constructor to pass an array reference of the
+original arguments passed to class.  It is C<undef> by default.
+
+The original arguments are already passed to the failover class, but
+this can be used to pass them all in a specific parameter.
+
+This option was added in v0.3.0.
+
 =back
 
 This was originally a L<Moo> port of L<MooseX::Failover>.  The
@@ -247,6 +257,7 @@ sub failover_to {
     push @args, $next{err_arg} . ' => $@' if defined $next{err_arg};
     push @args, $next{class_arg} . " => '${caller}'"
       if defined $next{class_arg};
+    push @args, $next{orig_arg} . ' => [@_]' if defined $next{orig_arg};
 
     my $code_str =
         'eval { shift->$orig(@_); }' . ' // ' . $next{class} . '->$cont('
