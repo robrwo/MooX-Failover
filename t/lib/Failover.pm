@@ -10,4 +10,6 @@ has class => (
     isa => Str
 );
 
+has 'num' => ( is => 'ro' );    # can be anything
+
 1;

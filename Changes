@@ -5,6 +5,8 @@ Revision history for MooX-Failover
   - Changed description of the "constructor" option to remove any
     confusion which class it applies to.
 
+  - Documented the need for quoting values in the "args" option.
+
   - Fixed typos in POD.
 
   [Enhancements]

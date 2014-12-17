@@ -150,6 +150,16 @@ pass the same arguments as the original class.
 This can be a scalar (single argument), hash reference or array
 reference.
 
+Note that the options are treated are treated as raw Perl code.  To
+use specify options, you need to explicitly add quotes to symbols, for
+example:
+
+  failover_to 'OtherClass' => (
+    args => [ map { "'$_'" } ( foo => 'bar' ) ],
+  );
+
+This option did not work properly until v0.3.0.
+
 =item C<err_arg>
 
 This is the name of the constructor argument to pass the error to (it

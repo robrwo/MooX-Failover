@@ -47,7 +47,7 @@
         default  => 'wibble',
     );
 
-    failover_to 'Failover2' => ( err_arg => 'error2', class_arg => 'class2', constructor => 'alt_new' );
+    failover_to 'Failover2' => ( err_arg => 'error2', class_arg => 'class2', constructor => 'alt_new' , args => [  map { "'$_'" } ( num => 1234 ) ], );
 
     sub other {
       die "bad constructor";
@@ -111,7 +111,7 @@ use Test::Most;
 
     my $obj = Sub1->new( num => 123, );
     isa_ok $obj, 'Failover2';
-    is $obj->num, 123, 'original argument passed';
+    is $obj->num, 1234, 'specific argument passed';
     is $Failover2::count, 1, 'alternative constructor run';
     like $obj->error2, qr/Missing required arguments: r_str/, 'expected error';
     is $obj->class2, 'Sub1', 'expected class';

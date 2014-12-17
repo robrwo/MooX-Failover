@@ -80,6 +80,7 @@ use Test::Most;
     isa_ok $obj, 'Failover';
     like $obj->error, qr/Missing required arguments: r_str/, 'expected error';
     is $obj->class, 'Sub1', 'expected class';
+    is $obj->num, 123, 'original argument passed';
 }
 
 done_testing;
