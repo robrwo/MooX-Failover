@@ -229,7 +229,7 @@ sub failover_to {
       if defined $next{class_arg};
 
     my $code_str =
-        'eval { shift->$orig(@_); }' . ' // ' . $next{class} . '->$cont(' 
+        'eval { shift->$orig(@_); }' . ' // ' . $next{class} . '->$cont('
       . join( ',', @args ) . ')';
 
     quote_sub $orig_name, $code_str, {
