@@ -162,8 +162,8 @@ To disable it, set it to C<undef>.
 
 =item C<class_arg>
 
-This is the name of the constructor argument to pass the name class
-that failed.  It defaults to "class".
+This is the name of the constructor argument to pass the name of the
+class that failed.  It defaults to "class".
 
 To disable it, set it to C<undef>.
 

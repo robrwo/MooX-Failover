@@ -5,6 +5,8 @@ Revision history for MooX-Failover
   - Changed description of the "constructor" option to remove any
     confusion which class it applies to.
 
+  - Fixed typos in POD.
+
   [Enhancements]
   - Added the ability to specify an alternative constructor name
     on the original class.
