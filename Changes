@@ -1,5 +1,7 @@
 Revision history for MooX-Failover
 
+{{$NEXT}}
+
 v0.3.0    2014-12-17 13:06:55+00:00 Europe/London
   [Documentation]
   - Changed description of the "constructor" option to remove any
