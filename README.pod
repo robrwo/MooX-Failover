@@ -67,6 +67,16 @@ This distribution recommends the following modules:
 
 =head1 RECENT CHANGES
 
+=head2 Documentation
+
+=over 4
+
+=item * 
+
+Reorganized documentation, and added more information.
+
+=back
+
 =head2 Other Changes
 
 =over 4
@@ -95,18 +105,12 @@ It is roughly equivalent to using
 This allows for cleaner design, by not forcing you to duplicate type
 checking for constructor parameters.
 
-A use case for this module is for instantiating
-L<Web::Machine::Resource> objects, where a resource class's attributes
-correspond to URL arguments.  A type failure would normally cause an
-internal serror error (HTTP 500).  Using L<MooX::Failover>, we can
-return a different resource object that examines the error, and
-returns a more appropriate error code, e.g. bad request (HTTP 400).
-
 See the module documentation for L<MooX::Failover> for more information.
 
 =head1 SEE ALSO
 
-L<MooseX::Failover>
+This was originally a L<Moo> port of L<MooseX::Failover>.  The
+interface was redesigned significantly, to be more efficient.
 
 =head1 AUTHOR
 

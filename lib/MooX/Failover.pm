@@ -76,13 +76,6 @@ It is roughly equivalent to using
 This allows for cleaner design, by not forcing you to duplicate type
 checking for constructor parameters.
 
-A use case for this module is for instantiating
-L<Web::Machine::Resource> objects, where a resource class's attributes
-correspond to URL arguments.  A type failure would normally cause an
-internal serror error (HTTP 500).  Using L<MooX::Failover>, we can
-return a different resource object that examines the error, and
-returns a more appropriate error code, e.g. bad request (HTTP 400).
-
 =begin :readme
 
 See the module documentation for L<MooX::Failover> for more information.
@@ -90,6 +83,21 @@ See the module documentation for L<MooX::Failover> for more information.
 =end :readme
 
 =for readme stop
+
+=head2 Use Cases
+
+A use case for this module is for instantiating
+L<Web::Machine::Resource> objects, where a resource class's attributes
+correspond to URL arguments.  A type failure would normally cause an
+internal serror error (HTTP 500).  Using L<MooX::Failover>, we can
+return a different resource object that examines the error, and
+returns a more appropriate error code, e.g. bad request (HTTP 400).
+
+Another use case for this module is for instantiating objects based on
+their data sources.  For example, to restrieve an object from a cache,
+or to fail and retrieve it from the database instead.
+
+=head2 Design Considerations
 
 Your failover class should support the same methods as the original
 class, so that it (roughly) satisfies the Liskov Substitution
@@ -110,6 +118,12 @@ This specifies the class to instantiate if the constructor dies.
 
 It should be specified I<after> all of the attributes have been
 declared.
+
+Chained failovers are allowed:
+
+  failover_to $first  => %options1;
+  failover_to $second => %options2;
+  ...
 
 The following options are supported.
 
@@ -176,9 +190,12 @@ To disable it, set it to C<undef>.
 =item C<class_arg>
 
 This is the name of the constructor argument to pass the name of the
-class that failed.  It defaults to "class".
+original class that failed.  It defaults to "class".
 
 To disable it, set it to C<undef>.
+
+For chained failovers, it always contains the name of the original
+class.
 
 =item C<orig_arg>
 
@@ -200,8 +217,11 @@ This option was added in v0.3.0.
 
 =back
 
-This was originally a L<Moo> port of L<MooseX::Failover>.  The
-interface was redesigned significantly, to be more efficient.
+Note that unimporting L<Moo> using
+
+  no Moo;
+
+will also unimport L<MooX::Failover>.
 
 =head1 ATTRIBUTES
 
@@ -294,7 +314,8 @@ sub failover_to {
 
 =head1 SEE ALSO
 
-L<MooseX::Failover>
+This was originally a L<Moo> port of L<MooseX::Failover>.  The
+interface was redesigned significantly, to be more efficient.
 
 =head1 AUTHOR
 

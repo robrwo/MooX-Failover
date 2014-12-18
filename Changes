@@ -1,6 +1,9 @@
 Revision history for MooX-Failover
 
 {{$NEXT}}
+  [Documentation]
+  - Reorganized documentation, and added more information.
+
   [Other Changes]
   - Added more tests.
 
