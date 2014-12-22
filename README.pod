@@ -75,6 +75,10 @@ This distribution recommends the following modules:
 
 Reorganized documentation, and added more information.
 
+=item * 
+
+Added acknowledgment.
+
 =back
 
 =head2 Other Changes
