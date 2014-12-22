@@ -23,7 +23,7 @@
         is       => 'ro',
         isa      => Str,
         required => 1,
-        default  => 'wibble',
+        default  => sub { 'wibble' },
     );
 
     failover_to 'Failover';

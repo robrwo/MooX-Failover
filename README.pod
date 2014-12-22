@@ -4,7 +4,7 @@ MooX::Failover - Instantiate Moo classes with failover
 
 =head1 VERSION
 
-v0.3.1
+v0.3.2
 
 =head1 SYNOPSIS
 
@@ -67,27 +67,13 @@ This distribution recommends the following modules:
 
 =head1 RECENT CHANGES
 
-=head2 Documentation
-
-=over 4
-
-=item * 
-
-Reorganized documentation, and added more information.
-
-=item * 
-
-Added acknowledgment.
-
-=back
-
 =head2 Other Changes
 
 =over 4
 
 =item * 
 
-Added more tests.
+Fixed tests to work with Moo v1.001000 or earlier.
 
 =back
 

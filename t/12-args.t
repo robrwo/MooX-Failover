@@ -44,7 +44,7 @@
         is       => 'ro',
         isa      => Str,
         required => 1,
-        default  => 'wibble',
+        default  => sub { 'wibble' },
     );
 
     failover_to 'Failover2' => ( err_arg => 'error2', class_arg => 'class2', constructor => 'alt_new' , args => [  map { "'$_'" } ( num => 1234 ) ], );
@@ -87,7 +87,7 @@
         is       => 'ro',
         isa      => Str,
         required => 1,
-        default  => 'wibble',
+        default  => sub { 'wibble' },
     );
 
     failover_to 'Failover2' => ( err_arg => undef, class_arg => undef );
