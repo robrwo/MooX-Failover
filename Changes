@@ -1,5 +1,9 @@
 Revision history for MooX-Failover
 
+{{$NEXT}}
+  [Other Changes]
+  - Made prereq for version explicit.
+
 v0.3.2    2014-12-22 15:34:54+00:00 Europe/London
   [Other Changes]
   - Fixed tests to work with Moo v1.001000 or earlier.
