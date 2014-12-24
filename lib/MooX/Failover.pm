@@ -321,7 +321,7 @@ interface was redesigned significantly, to be more efficient.
 
 Robert Rothenberg C<<rrwo@thermeon.com>>
 
-=head1 Acknowledgements
+=head2 Acknowledgements
 
 =over
 
@@ -329,7 +329,7 @@ Robert Rothenberg C<<rrwo@thermeon.com>>
 
 =item Piers Cawley.
 
-=item Gareth Kirwan
+=item Gareth Kirwan.
 
 =back
 

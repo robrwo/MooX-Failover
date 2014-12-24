@@ -4,7 +4,7 @@ MooX::Failover - Instantiate Moo classes with failover
 
 =head1 VERSION
 
-v0.3.2
+v0.3.3
 
 =head1 SYNOPSIS
 
@@ -67,13 +67,23 @@ This distribution recommends the following modules:
 
 =head1 RECENT CHANGES
 
+=head2 Documentation
+
+=over 4
+
+=item * 
+
+Fixed typo in POD markup.
+
+=back
+
 =head2 Other Changes
 
 =over 4
 
 =item * 
 
-Fixed tests to work with Moo v1.001000 or earlier.
+Made prereq for version explicit.
 
 =back
 
@@ -106,7 +116,7 @@ interface was redesigned significantly, to be more efficient.
 
 Robert Rothenberg C<<rrwo@thermeon.com>>
 
-=head1 Acknowledgements
+=head2 Acknowledgements
 
 =over
 
@@ -114,7 +124,7 @@ Robert Rothenberg C<<rrwo@thermeon.com>>
 
 =item Piers Cawley.
 
-=item Gareth Kirwan
+=item Gareth Kirwan.
 
 =back
 
