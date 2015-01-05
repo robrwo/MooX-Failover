@@ -85,6 +85,14 @@ Fixed typo in POD markup.
 
 Made prereq for version explicit.
 
+=item * 
+
+Minor tweaks to Changes file.
+
+=item * 
+
+Moved test prerequisties into test phase.
+
 =back
 
 See the F<Changes> file for a longer revision history.
