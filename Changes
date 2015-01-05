@@ -1,4 +1,8 @@
-Revision history for MooX-Failover
+Revision history for {{$dist->name}}
+
+{{$NEXT}}
+  [Other Changes]
+  - Minor tweaks to Changes file.
 
 v0.3.3    2014-12-24 10:07:09+00:00 Europe/London
   [Documentation]
