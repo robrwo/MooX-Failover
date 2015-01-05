@@ -1,6 +1,9 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+  [Documentation]
+  - Fixed typos in Changes file (v0.3.3 was broken up into two
+    sections).
 
 v0.3.3    2015-01-05 16:06:55+00:00 Europe/London
   [Documentation]
