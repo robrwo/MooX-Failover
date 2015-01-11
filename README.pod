@@ -4,7 +4,7 @@ MooX::Failover - Instantiate Moo classes with failover
 
 =head1 VERSION
 
-v0.3.3
+v0.3.4
 
 =head1 SYNOPSIS
 
@@ -37,7 +37,7 @@ L<How to install CPAN modules|http://www.cpan.org/modules/INSTALL.html>.
 
 =head2 Required Modules
 
-This distribution requires Perl v5.10.0.
+This distribution requires Perl v5.10.1.
 
 This distribution requires the following modules:
 
@@ -73,25 +73,7 @@ This distribution recommends the following modules:
 
 =item * 
 
-Fixed typo in POD markup.
-
-=back
-
-=head2 Other Changes
-
-=over 4
-
-=item * 
-
-Made prereq for version explicit.
-
-=item * 
-
-Minor tweaks to Changes file.
-
-=item * 
-
-Moved test prerequisties into test phase.
+Fixed typos in Changes file (v0.3.3 was broken up into two sections).
 
 =back
 
@@ -138,7 +120,7 @@ Robert Rothenberg C<<rrwo@thermeon.com>>
 
 =head1 COPYRIGHT
 
-Copyright 2014 Thermeon Worldwide, PLC.
+Copyright 2014-2015 Thermeon Worldwide, PLC.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.

@@ -1,12 +1,14 @@
 package MooX::Failover;
 
+use v5.10.1;
+
 use strict;
 use warnings;
 
 require Moo;
 
 use Carp;
-use Class::Load qw/ try_load_class /;
+use Class::Load 0.20 qw/ try_load_class /;
 use Sub::Defer qw/ undefer_sub /;
 use Sub::Quote qw/ quote_sub /;
 
@@ -335,7 +337,7 @@ Robert Rothenberg C<<rrwo@thermeon.com>>
 
 =head1 COPYRIGHT
 
-Copyright 2014 Thermeon Worldwide, PLC.
+Copyright 2014-2015 Thermeon Worldwide, PLC.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
