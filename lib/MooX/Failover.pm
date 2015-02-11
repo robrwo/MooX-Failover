@@ -314,6 +314,14 @@ sub failover_to {
 
 =for readme continue
 
+=head1 CAVEATS
+
+This module works by modifying the constructor.  This practice is
+discouraged for L<Moo> 2.0.
+
+However, it has been tested with version C<1.999_01>. There is no
+guarantee that it will work with future versions L<Moo>.
+
 =head1 AUTHOR
 
 Robert Rothenberg C<<rrwo@thermeon.com>>

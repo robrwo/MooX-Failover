@@ -8,6 +8,9 @@ Revision history for {{$dist->name}}
   - Removed reference to MooseX::Failover, which has been deleted from
     CPAN.
 
+  - Added CAVEATS section that discusses changes for Moo 2.0
+    [GitHub #3].
+
 v0.3.3    2015-01-05 16:06:55+00:00 Europe/London
   [Documentation]
   - Fixed typo in POD markup.
