@@ -314,11 +314,6 @@ sub failover_to {
 
 =for readme continue
 
-=head1 SEE ALSO
-
-This was originally a L<Moo> port of L<MooseX::Failover>.  The
-interface was redesigned significantly, to be more efficient.
-
 =head1 AUTHOR
 
 Robert Rothenberg C<<rrwo@thermeon.com>>
